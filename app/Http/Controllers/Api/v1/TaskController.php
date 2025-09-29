@@ -1,8 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTaskRequest;
+use App\Http\Resources\TaskResource;
+use App\Models\Task;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -26,9 +30,13 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request): TaskResource
     {
-        //
+
+        $validatedData = $request->validated();
+
+        return new TaskResource(Task::create($validatedData));
+   
     }
 
     /**
