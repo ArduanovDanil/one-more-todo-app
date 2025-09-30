@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
+use App\Traits\HttpResponses;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+    use HttpResponses;
     /**
      * Display a listing of the resource.
      */
@@ -30,29 +32,21 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTaskRequest $request): TaskResource
+    public function store(StoreTaskRequest $request): JsonResponse
     {
 
         $validatedData = $request->validated();
 
-        return new TaskResource(Task::create($validatedData));
+        return $this->success(new TaskResource(Task::create($validatedData)));
    
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Task $task)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return $this->success(new TaskResource($task));
     }
 
     /**
@@ -66,8 +60,22 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Task $task): JsonResponse
     {
-        //
+
+        $request = request();
+        dd($request->format());
+        //dd($task);
+        $result = $task->deleteOrFail();
+
+        //dd($result);
+        if (!$result) {
+            return response()->json(
+                ['message' => 'Not found'],
+                404
+            );
+        }
+
+        return response()->json('', 204);
     }
 }
