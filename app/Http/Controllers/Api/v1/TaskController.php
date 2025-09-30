@@ -7,7 +7,6 @@ use App\Http\Requests\StoreTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -57,21 +56,8 @@ class TaskController extends Controller
      */
     public function destroy(Task $task): JsonResponse
     {
-
-        $request = request();
-        //dd($request->format());
-        //dd($task);
-        $result = $task->delete();
-
-        //dd($result);
-        if (!$result) {
-            return response()->json(
-                ['message' => 'Not found'],
-                404
-            );
-        }
-
+        $task->delete();
         return $this->success('', code: 204);
-        //response()->json('', 204);
+
     }
 }
