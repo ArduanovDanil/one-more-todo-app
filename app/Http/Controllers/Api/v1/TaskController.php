@@ -6,13 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
-use App\Traits\HttpResponses;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    use HttpResponses;
+    //use HttpResponses;
     /**
      * Display a listing of the resource.
      */
@@ -57,9 +56,9 @@ class TaskController extends Controller
     {
 
         $request = request();
-        dd($request->format());
+        //dd($request->format());
         //dd($task);
-        $result = $task->deleteOrFail();
+        $result = $task->delete();
 
         //dd($result);
         if (!$result) {
@@ -69,6 +68,7 @@ class TaskController extends Controller
             );
         }
 
-        return response()->json('', 204);
+        return $this->success('', code: 204);
+        //response()->json('', 204);
     }
 }
