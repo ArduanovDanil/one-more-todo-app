@@ -58,5 +58,13 @@ class TaskControllerTest extends TestCase
 
         $response->assertStatus(200)->assertJsonPath('data.title', $task->title);
     }
-    
+
+    public function test_destroy()
+    {
+        $task = Task::factory()->create();
+        $response = $this->deleteJson(self::API_PATH . "/{$task->id}");
+
+        $response->assertStatus(204);
+    }
+
 }
