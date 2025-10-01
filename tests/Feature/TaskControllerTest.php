@@ -15,15 +15,6 @@ class TaskControllerTest extends TestCase
     use DatabaseTransactions;
 
     const API_PATH = '/api/v1/tasks';
-    /**
-     * A basic feature test example.
-     */
-    public function test_example(): void
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }
 
     public function test_store()
     {
