@@ -28,7 +28,7 @@ class TaskController extends Controller
 
         $validatedData = $request->validated();
 
-        return $this->success(new TaskResource(Task::create($validatedData)));
+        return $this->success(new TaskResource(Task::create($validatedData)), 201);
    
     }
 
