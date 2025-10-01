@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Resources\TaskResource;
 use Database\Factories\TaskFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -12,6 +13,8 @@ use App\Models\Task;
 class TaskControllerTest extends TestCase
 {
     use DatabaseTransactions;
+
+    const API_PATH = '/api/v1/tasks';
     /**
      * A basic feature test example.
      */
@@ -26,16 +29,34 @@ class TaskControllerTest extends TestCase
     {
         $task = Task::factory()->raw();
 
-        // $response = $this->postJson('/api/v1/tasks', [
-        //     'title' => 'Test title 22',
-        //     'description' => 'Test description',
-        //     'status' => 'Test status',
-        // ]);
-
-        $response = $this->postJson('/api/v1/tasks', $task);
+        $response = $this->postJson(self::API_PATH, $task);
 
         $response->assertStatus(201);
 
     }
 
+    public function test_index()
+    {
+        $response = $this->getJson(self::API_PATH);
+
+        $response->assertStatus(200);
+    }
+
+    public function test_show()
+    {
+        $task = Task::factory()->create();
+        $response = $this->getJson(self::API_PATH . "/{$task->id}");
+
+        $response->assertStatus(200);
+    }
+
+    public function test_update()
+    {
+        $task = Task::factory()->create();
+        $task->title = fake()->sentence();
+        $response = $this->putJson(self::API_PATH . "/{$task->id}", $task->toArray());
+
+        $response->assertStatus(200)->assertJsonPath('data.title', $task->title);
+    }
+    
 }
