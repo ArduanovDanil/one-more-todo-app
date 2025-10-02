@@ -6,11 +6,23 @@
 ## Требования к реализации:
 1.​ Создать Laravel-проект (если нет опыта с Laravel, можно на чистом PHP).  
 2.​ Реализовать API с CRUD-операциями для задач:  
--​ Создание задачи: POST /tasks (поля: title, description, status).  
--​ Просмотр списка задач: GET /tasks (возвращает все задачи).  
--​ Просмотр одной задачи: GET /tasks/{id}.  
--​ Обновление задачи: PUT /tasks/{id}.  
--​ Удаление задачи: DELETE /tasks/{id}.  
+* Создание задачи: POST /tasks (поля: title, description, status).  
+* Просмотр списка задач: GET /tasks (возвращает все задачи).  
+* Просмотр одной задачи: GET /tasks/{id}.  
+* Обновление задачи: PUT /tasks/{id}.  
+* Удаление задачи: DELETE /tasks/{id}.  
+
 3.​ Валидация данных (например, title не должен быть пустым).  
 4.​ Использовать SQLite или MySQL в качестве базы данных.  
 5.​ Код должен быть загружен в GitHub/GitLab/Bitbucket.  
+
+
+## Запуск проекта
+- Склонировать репозиторий
+- Выполнить  `composer install`
+- Скопировать в корне проекта файл `.env.example` в `.env`
+- Запустить приложение командой `./vendor/bin/sail up`
+- Создать ключ приложения через `./vendor/bin/sail artisan key:generate`
+- Запустить миграции `./vendor/bin/sail artisan migrate`
+- Api доступна по адресу `http://localhost:8000/api/v1/tasks`
+- Тесты можно запустить через `./vendor/bin/sail artisan test`
