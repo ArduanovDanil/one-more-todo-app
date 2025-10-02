@@ -12,7 +12,7 @@ use App\Models\Task;
 
 class TaskControllerTest extends TestCase
 {
-    use DatabaseTransactions;
+    use RefreshDatabase, WithFaker;
 
     const API_PATH = '/api/v1/tasks';
 
@@ -44,7 +44,7 @@ class TaskControllerTest extends TestCase
     public function test_update()
     {
         $task = Task::factory()->create();
-        $task->title = fake()->sentence();
+        $task->title = $this->faker()->sentence();
         $response = $this->putJson(self::API_PATH . "/{$task->id}", $task->toArray());
 
         $response->assertStatus(200)->assertJsonPath('data.title', $task->title);
