@@ -24,5 +24,5 @@
 - Запустить приложение командой `./vendor/bin/sail up`
 - Создать ключ приложения через `./vendor/bin/sail artisan key:generate`
 - Запустить миграции `./vendor/bin/sail artisan migrate`
-- Api доступна по адресу `http://localhost:8000/api/v1/tasks`
+- Api доступно по адресу `http://localhost:8000/api/v1/tasks`
 - Тесты можно запустить через `./vendor/bin/sail artisan test`
